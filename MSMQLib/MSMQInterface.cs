@@ -61,9 +61,8 @@ namespace MSMQLib
             MessageQueue queue = new MessageQueue(path);
             Message msg = new Message();
             msg.BodyStream = new MemoryStream(bytes);
-			msg.Label = label;
-			
-            await Task.Run(() => queue.Send(msg));
+						
+            await Task.Run(() => queue.Send(msg, label));
             return true;
         }
 
