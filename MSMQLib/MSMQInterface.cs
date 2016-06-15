@@ -22,7 +22,7 @@ namespace MSMQLib
             if (MessageQueue.Exists(path))
                 return false;
 
-            MessageQueue.Create(path);
+            MessageQueue.Create(path, true); // create transactional queue
             return true;
         }
 
