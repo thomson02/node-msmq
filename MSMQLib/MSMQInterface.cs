@@ -54,19 +54,15 @@ namespace MSMQLib
         public async Task<object> SendMessage(dynamic input)
         {
             string path = (string)input.path;
-            string message = (string)input.message;
+            string label = (string) input.label;
+			string message = (string)input.message;
 			
             byte[] bytes = Encoding.UTF8.GetBytes(message);
             MessageQueue queue = new MessageQueue(path);
             Message msg = new Message();
             msg.BodyStream = new MemoryStream(bytes);
+			msg.Label = label;
 			
-			// Set the message label if specified
-			if (((IDictionary<string, object>)input).ContainsKey("label") && !string.IsNullOrEmpty((string)input.label))
-			{
-				msg.Label = (string)input.label;
-			}
-
             await Task.Run(() => queue.Send(msg));
             return true;
         }
